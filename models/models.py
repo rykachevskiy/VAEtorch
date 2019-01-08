@@ -102,13 +102,15 @@ class Decoder(nn.Module):
 
 
 class VAE(nn.Module):
-    def __init__(self, input_shape, internal_shape):
+    def __init__(self, input_shape, internal_shape, feature_map=(1,16,32,64)):
         super(VAE, self).__init__()
 
         self.input_shape = np.array(list(input_shape))
         self.internal_shape = internal_shape
-        self.enc = Encoder(self.input_shape, self.internal_shape)
-        self.dec = Decoder(self.enc.last_conv_shape, self.internal_shape)
+        self.feature_map = feature_map
+
+        self.enc = Encoder(self.input_shape, self.internal_shape, self.feature_map)
+        self.dec = Decoder(self.enc.last_conv_shape, self.internal_shape, self.feature_map)
 
     def forward(self, x):
         mu, logvar = self.enc(x)
