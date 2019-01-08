@@ -2,3 +2,4 @@ FactorVAE/
 data/
 .idea/
 .ipynb_checkpoints/
+*.pyc
